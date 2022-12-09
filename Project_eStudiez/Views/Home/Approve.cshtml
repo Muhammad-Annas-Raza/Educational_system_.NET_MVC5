@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_user>
+
+@{
+    ViewBag.Title = "Approve";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+}
+<div class="pagetitle">
+    <h1>Approve Users</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Approve Users</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<div class="mt-top-50" > 
+    <table class="display table-bordered table_idd" id="update7">
+        <thead class="tbl_head">
+            <tr>
+                <th>User Name</th>
+                <th>User Email</th>
+                <th>User Role</th>
+                <th>Email Verification</th>
+                <th>Verification Code</th>
+                <th>User Approval</th>
+                <th>Delete User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user_email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbl_role.role_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user_email_status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.user_verification_code)
+                    </td>
+
+                    <td class="text-center">
+
+                        @using (Ajax.BeginForm("UserApprove", "Home",
+                              new AjaxOptions()
+                              {
+                                  HttpMethod = "POST",
+                                  InsertionMode = InsertionMode.Replace,
+                                  UpdateTargetId = "update7"
+                              }))
+                        {
+                            <input class="d-none" value="@item.user_id" name="id" />
+                            <button type="submit" class="btn btn-success">Approve</button>
+
+                        }
+                    </td>
+                    <td class="text-center">
+
+                        @using (Ajax.BeginForm("DeleteUser", "Home",
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "update7"
+                            }))
+                        {
+                            <input class="d-none" hidden value="@item.user_id" name="id" />
+                            <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                            
+               
+                        }
+                    </td>
+                </tr>
+
+
+
+            }
+
+        </tbody>
+
+
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script>
+    document.querySelector("#title").innerHTML = " eStudiez / Approve Users";
+</script>
+
+
+

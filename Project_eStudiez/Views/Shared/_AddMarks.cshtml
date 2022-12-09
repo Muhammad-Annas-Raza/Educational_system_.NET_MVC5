@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_user>
+
+
+    @foreach (var item in Model)
+    {
+        <option value="@item.user_id">@item.user_name - @item.user_std_enrollment_no</option>
+    }

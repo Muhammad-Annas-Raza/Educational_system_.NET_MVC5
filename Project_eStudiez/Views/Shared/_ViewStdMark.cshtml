@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_mark>
+  
+ <div class="input-group mb-3">
+    <div class="form-outline">
+        <input style="line-height: 18px;border: 1px solid grey;" id="id" onkeyup="search_fun()" class="form-control mt-5" placeholder="Search" />
+    </div>
+    <button type="button" class="btn btn-primary h-25 mt-5">
+        <i class="bi bi-search"></i>
+    </button>
+</div> 
+
+
+<table class="table table-bordered">
+
+    <thead class="tbl_head">
+        <tr>
+            <th>Student Enrollment no.</th>
+            <th>Student Name</th>
+            <th>Student Standard</th>
+            <th>Subject</th>
+            <th>Marks Obtained</th>
+            <th>Total Marks</th>
+            <th>Marks Posted at</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr class="xyz1">
+                <td class="enroll_no">
+                    @Html.DisplayFor(modelItem => item.tbl_user.user_std_enrollment_no)
+                </td>
+                <td class="nm">
+                    @Html.DisplayFor(modelItem => item.tbl_user.user_name)
+                </td>
+
+                <td class="Student_Standard">
+                    @Html.DisplayFor(modelItem => item.mark_std_standard)
+                </td>
+                <td class="subject">
+                    @Html.DisplayFor(modelItem => item.mark_subject)
+                </td>
+                <td class="obtained_marks">
+                    @Html.DisplayFor(modelItem => item.mark_obtainedmark)
+                </td>
+                <td  class="total_marks">
+                    @Html.DisplayFor(modelItem => item.mark_totalmark)
+                </td>
+                <td  class="date_time">
+                    @Html.DisplayFor(modelItem => item.mark_date_time)
+                </td>
+
+
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

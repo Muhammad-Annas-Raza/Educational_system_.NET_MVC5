@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_mark>
+@{
+    ViewBag.Title = "ViewYourMark";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+<div class="pagetitle">
+    <h1>View Your Marks</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">View Your Marks</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+
+<div class="input-group mb-3">
+    <div class="form-outline">
+        <input style="line-height: 19px;border: 1px solid grey;" id="id" onkeyup="searchh_fun()" class="form-control mt-5" placeholder="Search" />
+    </div>
+    <button type="button" class="btn btn-primary h-25 mt-5">
+        <i class="bi bi-search"></i>
+    </button>
+</div>
+
+
+<table class="table table-bordered" id="tabbb">
+
+    <thead class="tbl_head">
+        <tr>
+            <th>Student Enrollment no.</th>
+            <th>Student Name</th>
+            <th>Student Standard</th>
+            <th>Subject</th>
+            <th>Marks Obtained</th>
+            <th>Total Marks</th>
+            <th>Marks Posted at</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr class="xyz">
+                <td class="enroll_no">
+                    @Html.DisplayFor(modelItem => item.tbl_user.user_std_enrollment_no)
+                </td>
+                <td class="nm">
+                    @Html.DisplayFor(modelItem => item.tbl_user.user_name)
+                </td>
+
+                <td class="Student_Standard">
+                    @Html.DisplayFor(modelItem => item.mark_std_standard)
+                </td>
+                <td class="subject">
+                    @Html.DisplayFor(modelItem => item.mark_subject)
+                </td>
+                <td class="obtained_marks">
+                    @Html.DisplayFor(modelItem => item.mark_obtainedmark)
+                </td>
+                <td class="total_marks">
+                    @Html.DisplayFor(modelItem => item.mark_totalmark)
+                </td>
+                <td class="date_time">
+                    @Html.DisplayFor(modelItem => item.mark_date_time)
+                </td>
+
+
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+
+
+<script>
+
+    document.querySelector("#title").innerHTML = "eStudiez / View Your Marks";
+
+
+    function searchh_fun() {
+        let filter = document.getElementById('id').value.toUpperCase();
+        let myTable = document.getElementById('tabbb');
+        let whole_table = document.querySelectorAll('.xyz');
+
+        let tr = myTable.getElementsByClassName("subject")
+        let tr1 = myTable.getElementsByClassName("Student_Standard")
+        let tr2 = myTable.getElementsByClassName("obtained_marks")
+        let tr3 = myTable.getElementsByClassName("total_marks")
+        let tr4 = myTable.getElementsByClassName("date_time")
+        let tr5 = myTable.getElementsByClassName("nm")
+        let tr6 = myTable.getElementsByClassName("enroll_no")
+
+        for (var i = 0; i < tr.length; i++) {
+            let td = tr[i].textContent || td.innerHTML;
+            let td1 = tr1[i].textContent || td1.innerHTML;
+            let td2 = tr2[i].textContent || td2.innerHTML;
+            let td3 = tr3[i].textContent || td3.innerHTML;
+            let td4 = tr4[i].textContent || td4.innerHTML;
+            let td5 = tr5[i].textContent || td5.innerHTML;
+            let td6 = tr6[i].textContent || td6.innerHTML;
+            if (td || td1 || td2 || td3 || td4 || t5 || t6) {
+                if (td.toUpperCase().indexOf(filter) > -1 || td1.toUpperCase().indexOf(filter) > -1 || td2.toUpperCase().indexOf(filter) > -1 || td3.toUpperCase().indexOf(filter) > -1 || td4.toUpperCase().indexOf(filter) > -1 || td5.toUpperCase().indexOf(filter) > -1 || td6.toUpperCase().indexOf(filter) > -1) {
+                    console.log(whole_table[i].style.display = "")
+                } else {
+                    whole_table[i].style.display = "none"
+                }
+            }
+        }
+
+    }
+</script>
+

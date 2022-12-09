@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="db_eStudiezModelStoreContainer" CdmEntityContainer="db_eStudiezEntities1">
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="db_eStudiezModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_extraclass">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_extraclass">
+        <MappingFragment StoreEntitySet="tbl_extraclass">
+          <ScalarProperty Name="extraclass_id" ColumnName="extraclass_id" />
+          <ScalarProperty Name="extraclass_subject" ColumnName="extraclass_subject" />
+          <ScalarProperty Name="extraclass_dateTime" ColumnName="extraclass_dateTime" />
+          <ScalarProperty Name="extraclass_datetime_created_at" ColumnName="extraclass_datetime_created_at" />
+          <ScalarProperty Name="extraclass_class" ColumnName="extraclass_class" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_feedback">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_feedback">
+        <MappingFragment StoreEntitySet="tbl_feedback">
+          <ScalarProperty Name="feedback_role" ColumnName="feedback_role" />
+          <ScalarProperty Name="feedback_id" ColumnName="feedback_id" />
+          <ScalarProperty Name="feedback_name" ColumnName="feedback_name" />
+          <ScalarProperty Name="feedback_email" ColumnName="feedback_email" />
+          <ScalarProperty Name="feedback_subject" ColumnName="feedback_subject" />
+          <ScalarProperty Name="feedback_message" ColumnName="feedback_message" />
+          <ScalarProperty Name="feedback_datetime" ColumnName="feedback_datetime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_link">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_link">
+        <MappingFragment StoreEntitySet="tbl_link">
+          <ScalarProperty Name="link_id" ColumnName="link_id" />
+          <ScalarProperty Name="link_material" ColumnName="link_material" />
+          <ScalarProperty Name="link_datetime" ColumnName="link_datetime" />
+          <ScalarProperty Name="link_title" ColumnName="link_title" />
+          <ScalarProperty Name="link_class" ColumnName="link_class" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_mark">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_mark">
+        <MappingFragment StoreEntitySet="tbl_mark">
+          <ScalarProperty Name="mark_std_standard" ColumnName="mark_std_standard" />
+          <ScalarProperty Name="mark_date_time" ColumnName="mark_date_time" />
+          <ScalarProperty Name="mark_id" ColumnName="mark_id" />
+          <ScalarProperty Name="mark_subject" ColumnName="mark_subject" />
+          <ScalarProperty Name="mark_totalmark" ColumnName="mark_totalmark" />
+          <ScalarProperty Name="mark_obtainedmark" ColumnName="mark_obtainedmark" />
+          <ScalarProperty Name="fk_user_id" ColumnName="fk_user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_pdf">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_pdf">
+        <MappingFragment StoreEntitySet="tbl_pdf">
+          <ScalarProperty Name="pdf_id" ColumnName="pdf_id" />
+          <ScalarProperty Name="pdf_material" ColumnName="pdf_material" />
+          <ScalarProperty Name="pdf_datetime" ColumnName="pdf_datetime" />
+          <ScalarProperty Name="pdf_class" ColumnName="pdf_class" />
+          <ScalarProperty Name="pdf_title" ColumnName="pdf_title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_resources">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_resources">
+        <MappingFragment StoreEntitySet="tbl_resources">
+          <ScalarProperty Name="resource_id" ColumnName="resource_id" />
+          <ScalarProperty Name="resource_material" ColumnName="resource_material" />
+          <ScalarProperty Name="resource_datetime" ColumnName="resource_datetime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_role">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_role">
+        <MappingFragment StoreEntitySet="tbl_role">
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_user">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_user">
+        <MappingFragment StoreEntitySet="tbl_user">
+          <ScalarProperty Name="user_email_status" ColumnName="user_email_status" />
+          <ScalarProperty Name="user_verification_code" ColumnName="user_verification_code" />
+          <ScalarProperty Name="fk_standard_id" ColumnName="fk_standard_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_address" ColumnName="user_address" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_image" ColumnName="user_image" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_age" ColumnName="user_age" />
+          <ScalarProperty Name="fk_role_id" ColumnName="fk_role_id" />
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_approved" ColumnName="user_approved" />
+          <ScalarProperty Name="user_std_enrollment_no" ColumnName="user_std_enrollment_no" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_standard">
+      <EntityTypeMapping TypeName="db_eStudiezModel.tbl_standard">
+        <MappingFragment StoreEntitySet="tbl_standard">
+          <ScalarProperty Name="standard_name" ColumnName="standard_name" />
+          <ScalarProperty Name="standard_id" ColumnName="standard_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

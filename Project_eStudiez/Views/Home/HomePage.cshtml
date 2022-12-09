@@ -1,0 +1,243 @@
+﻿@model Project_eStudiez.OtherMethods.Class3in1
+@{
+    ViewBag.Title = "HomePage";
+
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }else if(Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+ 
+
+
+<div class="pagetitle">
+    <h1>Home</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage", "Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Home</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+ 
+
+<div class="center" >
+<div class="w-500">
+            <img  src="~/image/Newfolder/Alarm_Clock_GIF_Animation_High_Res.gif" height="70" />
+    <div class="card info-card revenue-card">
+      
+        <div class="card-body">
+            <h5 class="card-title">Extra Class |<span class="text-success fw-bold"> @Model.row_extraclass.extraclass_class</span></h5>
+
+            <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+
+                    <i style="font-size:40px;" class="bi bi-book-half"></i>
+                </div>
+                <div class="ps-3">
+                    <h3 class="fw-bold">@Model.row_extraclass.extraclass_subject</h3>
+                    <span class="text-muted small pt-1 small">will be conducted at</span> <span class="text-success fw-bold pt-2 ps-1">@Model.row_extraclass.extraclass_dateTime</span>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</div><!-- End Extraclass Card -->
+   
+ 
+
+<section class="section profile">
+    <div class="row">
+
+
+        <div class="col-xl-12">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Extra Class Schedule</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Link Details</button>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Download Pdf</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content pt-2">
+
+                        <div class="tab-pane fade show active profile-overview p-25" id="profile-overview">
+
+                            <table class="display table-bordered table_idd">
+                                <thead class="tbl_head">
+                                    <tr>
+                                        <th>Serial No.</th>
+                                        <th>Class Name</th>
+                                        <th>Time of Class</th>
+                                        <th>Extra Class Subject</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var i = 0;
+                                    }
+                                    @foreach (var item in Model.lst_tbl_extraclass)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @(i+=1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.extraclass_class)
+                                            </td>
+                                            <td class="text-success fw-bold">
+                                                @Html.DisplayFor(modelItem => item.extraclass_dateTime)
+                                            </td>
+                                            <td class="h3 fw-bold">
+                                                @Html.DisplayFor(modelItem => item.extraclass_subject)
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+
+                        </div>
+
+                        <!-- Profile Edit Form -->
+                        <div class="tab-pane fade profile-edit pt-3 p-25" id="profile-edit">
+
+
+
+
+                            <table class="display table-bordered table_idd">
+                                <thead class="tbl_head">
+                                    <tr>
+                                        <th>Serial no.</th>
+                                        <th>Class Name</th>
+                                        <th>Click on Link </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        i = 0;
+                                    }
+                                    @foreach (var item in Model.lst_tbl_link)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @(i+=1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.link_class)
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Content(item.link_material)" target="_blank">@item.link_title</a>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <div class="tab-pane fade pt-3 p-25" id="profile-change-password">
+                            <!-- Pdf Form -->
+
+
+
+
+                            <div class="row">
+                                @foreach (var item in Model.lst_tbl_pdf)
+                                {
+
+                                    <div class="col-md-4">
+                                        <div class="card" style="width: 18rem;">
+                                            <div class="text-center mt-2"><a href="@Url.Content(item.pdf_material)" target="_blank"><img height="60" width="60" src="~/image/Newfolder/pdf-icon.png" /></a></div>
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title"><b>@item.pdf_title</b></h5>
+                                                <hr class="dropdown-divider">
+                                                <p class="card-text"><b class="fs-15">Class : ( @item.pdf_class)</b><br />Posted at : <b>@item.pdf_datetime</b></p>
+                                                <a href="@Url.Content(item.pdf_material)" download="@item.pdf_title" class="btn btn-primary">Download Pdf</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    document.querySelector("#title").innerHTML = " eStudiez / Home";
+</script>
+
+

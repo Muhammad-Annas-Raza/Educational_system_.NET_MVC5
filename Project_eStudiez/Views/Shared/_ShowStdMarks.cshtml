@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_mark>
+ 
+    <thead class="tbl_head">
+        <tr>
+
+            <th>Student Name</th>
+            <th>Subject</th>
+            <th>Marks Obtained</th>
+            <th>Total Marks</th>
+            <th>Marks Posted at</th>
+            <th>Student Standard</th>
+            <th>Delete Student's Record</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_user.user_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mark_subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mark_obtainedmark)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mark_totalmark)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mark_date_time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mark_std_standard)
+                </td>
+
+                <td class="text-center">
+                    @using (Ajax.BeginForm("DeleteStudentRecord", "Home",
+                              new AjaxOptions()
+                              {
+                                  HttpMethod = "POST",
+                                  InsertionMode = InsertionMode.Replace,
+                                  UpdateTargetId = "update17"
+                              }))
+                    {
+                        <input class="d-none" hidden value="@item.mark_id" name="id" />
+                        <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+ 

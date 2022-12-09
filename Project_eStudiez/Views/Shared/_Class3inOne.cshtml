@@ -1,0 +1,123 @@
+﻿@model Project_eStudiez.OtherMethods.Class3in1
+
+
+<div class="row">
+    <div class="col-md">
+
+        <table class="display table-bordered table_idd">
+            <thead class="tbl_head">
+                <tr>
+                    <th>Class Name</th>
+                    <th>Title Of Pdf</th>
+                    <th>Click On Pdf to Download</th>
+                    <th>Delete Pdf</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.lst_tbl_pdf)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pdf_class)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pdf_title)
+                        </td>
+                        <td>
+                            <a href="@Url.Content(item.pdf_material)" download="@item.pdf_title"><img height="60" width="60" src="~/image/Newfolder/pdf-icon.png" /></a>
+                        </td>
+
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.tbl_role.role_name)
+                            </td>*@
+                        <td class="text-center">
+                            <a href="@Url.Action("PdfDelete","Home",new { id =item.pdf_id})" class="btn btn-danger btn-sm" title="Delete Student"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+
+    <div class="col-md">
+        <table class="display table-bordered table_idd">
+            <thead class="tbl_head">
+                <tr>
+                    <th>Class Name</th>
+                    <th>Time of Class</th>
+                    <th>Extra Class Subject</th>
+                    <th>Delete Pdf</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.lst_tbl_extraclass)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.extraclass_class)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.extraclass_dateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.extraclass_subject)
+                        </td>
+
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.tbl_role.role_name)
+                            </td>*@
+                        <td class="text-center">
+                            <a href="@Url.Action("extraclassDelete","Home",new { id =item.extraclass_id})" class="btn btn-danger btn-sm" title="Delete Student"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <div class="col-md">
+        <table class="display table-bordered table_idd">
+            <thead class="tbl_head">
+                <tr>
+                    <th>Class Name</th>
+                    <th>Click on Link </th>
+                    <th>Delete Link</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.lst_tbl_link)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.link_class)
+                        </td>
+                        <td>
+                            <a href="@Url.Content(item.link_material)" target="_blank">@item.link_title</a>
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.tbl_role.role_name)
+                            </td>*@
+                        <td class="text-center">
+                            <a href="@Url.Action("linkDelete","Home",new { id =item.link_id})" class="btn btn-danger btn-sm" title="Delete Student"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

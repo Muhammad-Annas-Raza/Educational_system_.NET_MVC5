@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_user>
+ 
+    <thead class="tbl_head">
+        <tr>
+            <th>User Name</th>
+            <th>User Email</th>
+            <th>User Role</th>
+            <th>Email Verification</th>
+            <th>Verification Code</th>
+            <th>User Approval</th>
+            <th>Delete User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_role.role_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_email_status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_verification_code)
+                </td>
+
+                <td class="text-center">
+
+                    @using (Ajax.BeginForm("UserApprove", "Home",
+                          new AjaxOptions()
+                          {
+                              HttpMethod = "POST",
+                              InsertionMode = InsertionMode.Replace,
+                              UpdateTargetId = "update7"
+                          }))
+                    {
+                        <input class="d-none" value="@item.user_id" name="id" />
+
+                        <button type="submit" class="btn btn-success">Approve</button>
+
+                    }
+                </td>
+                <td class="text-center">
+
+                    @using (Ajax.BeginForm("DeleteUser", "Home",
+                        new AjaxOptions()
+                        {
+                            HttpMethod = "POST",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "update7"
+                        }))
+                    {
+                        <input class="d-none" value="@item.user_id" name="id" />
+
+                        <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+
+                    }
+                </td>
+            </tr>
+
+
+
+        }
+
+    </tbody>
+ 
+
+

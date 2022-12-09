@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_user>
+@{
+    if (Session["role"] == "Student")
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"] == "Parent/Guardian")
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"] == "Teacher")
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"] == "Super Admin")
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    ViewBag.Title = "AllStudent";
+}
+
+
+<div class="pagetitle">
+    <h1>Students</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Students</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<div class="mt-top-50">
+</div>
+<div class="text-center">
+    <code class="h3" style="background-color:#c7254e;color:white;padding:3px 7px 3px 7px;"><b>First Delete all marks of Student you want to Delete</b></code>
+</div>
+<table class="display table-bordered table_idd" id="update8">
+    <thead class="tbl_head">
+        <tr>
+            <th>Student Image</th>
+            <th>Student Name</th>
+            <th>Student Email</th>
+            <th>Student Address</th>
+            <th>Student Phone</th>
+            <th>Student Age</th>
+            <th>Student Standard</th>
+            <th>Student Enrollment no</th>
+            <th>Delete Student</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img class="img-fluid" height="80" width="80" src="@Url.Content(item.user_image)" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbl_standard.standard_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user_std_enrollment_no)
+                </td>
+
+                <td class="text-center">
+                    @using (Ajax.BeginForm("DeleteStudent", "Home",
+                              new AjaxOptions()
+                              {
+                                  HttpMethod = "POST",
+                                  InsertionMode = InsertionMode.Replace,
+                                  UpdateTargetId = "update8"
+                              }))
+                    {
+                        <input class="d-none" hidden value="@item.user_id" name="id" />
+                        <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+<script>
+    document.querySelector("#title").innerHTML = " eStudiez / Students";
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+

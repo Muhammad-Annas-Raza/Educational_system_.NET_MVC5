@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_standard>
+
+
+
+<thead class="tbl_head">
+    <tr>
+        <th>Standard Name</th>
+        <th>Delete Standard</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.standard_name)
+            </td>
+
+            <td class="text-center">
+                @using (Ajax.BeginForm("DeleteStandard", "Home",
+                          new AjaxOptions()
+                          {
+                              HttpMethod = "POST",
+                              InsertionMode = InsertionMode.Replace,
+                              UpdateTargetId = "update21"
+                          }))
+                {
+                    <input class="d-none" hidden value="@item.standard_id" name="id" />
+                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                }
+            </td>
+
+        </tr>
+    }
+
+</tbody>

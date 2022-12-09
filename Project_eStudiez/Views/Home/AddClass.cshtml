@@ -1,0 +1,109 @@
+﻿@model Project_eStudiez.Models.tbl_standard
+
+@{
+    ViewBag.Title = "AddClass";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="pagetitle">
+    <h1>Add Class Name</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Add Class Name</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<div class="text-center  mb-5">
+    <code class="h3" style="background-color:#c7254e;color:white;padding:3px 7px 3px 7px;"><b>First Delete all students of that class, Which class you want to Delete</b></code>
+</div>
+@using (Ajax.BeginForm("AddClass", "Home",
+                            new AjaxOptions()
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "update21"
+                            }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.standard_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Class Name" } })
+                @Html.ValidationMessageFor(model => model.standard_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 text-center">
+                <input type="submit" value="Add Class" class="btn btn-primary mt-3 mb-3" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<table id="update21" class="display table-bordered table_idd">
+
+    <thead class="tbl_head">
+        <tr>
+            <th>Standard Name</th>
+            <th>Delete Standard</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (List<Project_eStudiez.Models.tbl_standard>)ViewData["tbl_std"])
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.standard_name)
+                </td>
+
+                <td class="text-center">
+                    @using (Ajax.BeginForm("DeleteStandard", "Home",
+                              new AjaxOptions()
+                              {
+                                  HttpMethod = "POST",
+                                  InsertionMode = InsertionMode.Replace,
+                                  UpdateTargetId = "update21"
+                              }))
+                    {
+                        <input class="d-none" hidden value="@item.standard_id" name="id" />
+                        <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+<script>
+    document.querySelector("#title").innerHTML = " eStudiez / Add Class Name";
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>

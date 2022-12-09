@@ -1,0 +1,53 @@
+﻿@model Project_eStudiez.Models.tbl_user
+
+@using (Ajax.BeginForm("ChangePwd", "Home",
+                                new AjaxOptions()
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "update2"
+                                }))
+{
+
+    @Html.AntiForgeryToken()
+ 
+
+
+
+    <div class="row mb-3">
+        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+        <div class="col-md-8 col-lg-9">
+            @*<input name="newpassword" type="password" class="form-control" id="newPassword">*@
+            @Html.EditorFor(model => model.user_password, new { htmlAttributes = new { @class = "form-control yourPas", @id = "yourPassword", @type = "password", @name = "password" } })
+
+
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+        <div class="col-md-8 col-lg-9">
+            @* <input name="renewpassword" type="password" class="form-control" id="renewPassword">*@
+
+            @Html.EditorFor(model => model.user_confirm_password, new { htmlAttributes = new { @class = "form-control yourPas", @id = "yourPassword", @type = "password", @name = "password" } })
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox"
+                   name="remember"
+                   value="true" id="rememberMe">
+            <label class="form-check-label"
+                   for="showpassword">show password?</label>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Change Password</button>
+    </div>
+
+
+}
+
+<div id="update2"></div>
+<script src="~/Scripts/JavaScript.js"></script>

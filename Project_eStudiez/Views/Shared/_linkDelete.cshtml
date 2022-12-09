@@ -1,0 +1,51 @@
+﻿@model  Project_eStudiez.OtherMethods.Class3in1
+
+<thead class="tbl_head">
+    <tr>
+        <th>Serial no.</th>
+        <th>Class Name</th>
+        <th>Click on Link </th>
+        <th>Delete Link</th>
+
+    </tr>
+</thead>
+<tbody>
+    @{
+       var i = 0;
+    }
+    @foreach (var item in Model.lst_tbl_link)
+    {
+        <tr>
+            <td>
+                @(i+=1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.link_class)
+            </td>
+            <td>
+                <a href="@Url.Content(item.link_material)" target="_blank">@item.link_title</a>
+            </td>
+
+            @*<td class="text-center">
+                    <a href="@Url.Action("linkDelete","Home",new { id =item.link_id})" class="btn btn-danger btn-sm" title="Delete link"><i class="bi bi-trash"></i></a>
+                </td>*@
+            <td class="text-center">
+
+
+                @using (Ajax.BeginForm("linkDelete", "Home",
+                          new AjaxOptions()
+                          {
+                              HttpMethod = "POST",
+                              InsertionMode = InsertionMode.Replace,
+                              UpdateTargetId = "update12"
+                          }))
+                {
+                    <input class="d-none" hidden value="@item.link_id" name="id" />
+                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                }
+            </td>
+
+        </tr>
+    }
+
+</tbody>

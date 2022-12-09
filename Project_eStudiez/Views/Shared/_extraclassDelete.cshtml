@@ -1,0 +1,55 @@
+﻿@model Project_eStudiez.OtherMethods.Class3in1
+
+
+<thead class="tbl_head">
+    <tr>
+        <th>Serial No.</th>
+        <th>Class Name</th>
+        <th>Time of Class</th>
+        <th>Extra Class Subject</th>
+        <th>Delete Class Schedule</th>
+
+    </tr>
+</thead>
+<tbody>
+    @{
+        var i = 0;
+    }
+    @foreach (var item in Model.lst_tbl_extraclass)
+    {
+        <tr>
+
+            <td>
+                @(i+=1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.extraclass_class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.extraclass_dateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.extraclass_subject)
+            </td>
+            <td class="text-center">
+
+
+                @using (Ajax.BeginForm("extraclassDelete", "Home",
+                          new AjaxOptions()
+                          {
+                              HttpMethod = "POST",
+                              InsertionMode = InsertionMode.Replace,
+                              UpdateTargetId = "update11"
+                          }))
+                {
+                    <input class="d-none" hidden value="@item.extraclass_id" name="id" />
+                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                }
+            </td>
+            @*<td class="text-center">
+                    <a href="@Url.Action("extraclassDelete","Home",new { id = item.extraclass_id})" class="btn btn-danger btn-sm" title="Delete Schedule"><i class="bi bi-trash"></i></a>
+                </td>*@
+        </tr>
+    }
+
+</tbody>

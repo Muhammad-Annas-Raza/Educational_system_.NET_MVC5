@@ -1,0 +1,153 @@
+﻿@model Project_eStudiez.Models.tbl_mark
+@{
+    ViewBag.Title = "AddMarks";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="pagetitle">
+    <h1>Add Marks</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Add Marks</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+ @using (Ajax.BeginForm("std_drpdwn", "Home",
+                             new AjaxOptions()
+                             {
+                                 HttpMethod = "POST",
+                                 InsertionMode = InsertionMode.Replace,
+                                 UpdateTargetId = "update14"
+                             }))
+{ 
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-floating mb-3">
+            @Html.DropDownList("std_drpdwn", (SelectList)Session["standard1"], new { @class = "form-select" })
+            <label class="text-muted">-- Select Standard --</label>
+        </div>
+    </div>
+    <div class="col-md-3 mt-3 mb-3">
+        <button type="submit" class="border-0 btn btn-primary"><i class="bi bi-search"></i>&nbsp; Search</button>
+    </div>
+
+</div>
+} 
+
+
+<!-- Custom Styled Validation -->
+
+@using (Ajax.BeginForm("AddMarks", "Home",
+                         new AjaxOptions()
+                         {
+                             HttpMethod = "POST",
+                             InsertionMode = InsertionMode.Replace,
+                             UpdateTargetId = "update16"
+                         }))
+{
+    <div class="container">
+        <div class="row p-4 bg-white">
+
+
+            <div class="row mt-2">
+
+                <div class="col-md-3">
+                    <label class="form-label h4"><i class="bi bi-journal-bookmark-fill"></i>&nbsp; Subject</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.mark_subject, new { htmlAttributes = new { @class = "form-control", @id = "txt1" } })
+                    @Html.ValidationMessageFor(m => m.mark_subject, "", new { @class = "text-danger" })
+                </div>
+
+
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-3">
+                    <label class="form-label h4"><i class="bi bi-table"></i>&nbsp;Total Marks</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.mark_totalmark, new { htmlAttributes = new { @class = "form-control", @id = "txt2" } })
+                    @Html.ValidationMessageFor(m => m.mark_totalmark, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-3">
+                    <label class="form-label h4"><i class="bi bi-clipboard-data"></i>&nbsp;Obtained Marks</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.mark_obtainedmark, new { htmlAttributes = new { @class = "form-control", @id = "txt3" } })
+                    @Html.ValidationMessageFor(m => m.mark_obtainedmark, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-3">
+                    <label class="form-label h4"><i class="bi bi-person"></i>&nbsp;Select Student</label>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="update14" name="std_value"></select>
+                </div>
+
+                @*<select class="form-select" id="update14"></select>*@
+            </div>
+
+
+            <div class="col-12">
+                <button class="btn btn-primary" onclick="chck()" type="submit">Add Marks</button>
+            </div>
+
+            <!-- End Custom Styled Validation -->
+        </div>
+    </div>
+}
+
+
+
+<div id="update16"></div>
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script>
+
+    document.querySelector("#title").innerHTML = " eStudiez / Students Marks";
+    $("#std_drpdwn option").each(function () {
+        $(this).siblings('[value="' + this.value + '"]').remove();
+    });
+    function chck() {
+        if (document.getElementById("update14").value == "" || document.getElementById("txt1").value == "" || document.getElementById("txt2").value == "" || document.getElementById("txt3").value == "") {
+            document.getElementById("update16").innerHTML = "<h3 class=\"text-danger\">Please fill all fields</h3>";
+        }
+
+    }
+</script>

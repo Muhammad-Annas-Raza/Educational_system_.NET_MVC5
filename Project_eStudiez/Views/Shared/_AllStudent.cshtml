@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Project_eStudiez.Models.tbl_user>
+
+<thead class="tbl_head">
+    <tr>
+        <th>Student Image</th>
+        <th>Student Name</th>
+        <th>Student Email</th>
+        <th>Student Address</th>
+        <th>Student Phone</th>
+        <th>Student Age</th>
+        <th>Student Standard</th>
+        <th>Student Enrollment no</th>
+        <th>Delete Student</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img class="img-fluid" height="80" width="80" src="@Url.Content(item.user_image)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_standard.standard_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_std_enrollment_no)
+            </td>
+
+            <td class="text-center">
+                @using (Ajax.BeginForm("DeleteStudent", "Home",
+                          new AjaxOptions()
+                          {
+                              HttpMethod = "POST",
+                              InsertionMode = InsertionMode.Replace,
+                              UpdateTargetId = "update8"
+                          }))
+                {
+                    <input class="d-none" hidden value="@item.user_id" name="id" />
+                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                }
+            </td>
+
+        </tr>
+    }
+
+</tbody>

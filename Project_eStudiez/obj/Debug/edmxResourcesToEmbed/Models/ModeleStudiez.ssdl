@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_eStudiezModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tbl_extraclass">
+    <Key>
+      <PropertyRef Name="extraclass_id" />
+    </Key>
+    <Property Name="extraclass_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="extraclass_subject" Type="text" />
+    <Property Name="extraclass_dateTime" Type="varchar" MaxLength="150" />
+    <Property Name="extraclass_datetime_created_at" Type="datetime" />
+    <Property Name="extraclass_class" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tbl_feedback">
+    <Key>
+      <PropertyRef Name="feedback_id" />
+    </Key>
+    <Property Name="feedback_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="feedback_name" Type="varchar" MaxLength="150" />
+    <Property Name="feedback_email" Type="varchar" MaxLength="150" />
+    <Property Name="feedback_subject" Type="text" />
+    <Property Name="feedback_message" Type="text" />
+    <Property Name="feedback_datetime" Type="datetime" />
+    <Property Name="feedback_role" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_link">
+    <Key>
+      <PropertyRef Name="link_id" />
+    </Key>
+    <Property Name="link_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="link_material" Type="text" />
+    <Property Name="link_datetime" Type="datetime" />
+    <Property Name="link_title" Type="varchar" MaxLength="255" />
+    <Property Name="link_class" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tbl_mark">
+    <Key>
+      <PropertyRef Name="mark_id" />
+    </Key>
+    <Property Name="mark_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mark_subject" Type="varchar(max)" />
+    <Property Name="mark_totalmark" Type="int" />
+    <Property Name="mark_obtainedmark" Type="int" />
+    <Property Name="fk_user_id" Type="int" Nullable="false" />
+    <Property Name="mark_date_time" Type="datetime" />
+    <Property Name="mark_std_standard" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_pdf">
+    <Key>
+      <PropertyRef Name="pdf_id" />
+    </Key>
+    <Property Name="pdf_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pdf_material" Type="text" Nullable="false" />
+    <Property Name="pdf_datetime" Type="datetime" />
+    <Property Name="pdf_class" Type="varchar" MaxLength="255" />
+    <Property Name="pdf_title" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tbl_resources">
+    <Key>
+      <PropertyRef Name="resource_id" />
+    </Key>
+    <Property Name="resource_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="resource_material" Type="text" />
+    <Property Name="resource_datetime" Type="text" />
+  </EntityType>
+  <EntityType Name="tbl_role">
+    <Key>
+      <PropertyRef Name="role_id" />
+    </Key>
+    <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_standard">
+    <Key>
+      <PropertyRef Name="standard_id" />
+    </Key>
+    <Property Name="standard_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="standard_name" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_name" Type="varchar(max)" />
+    <Property Name="user_address" Type="varchar(max)" />
+    <Property Name="user_password" Type="varchar(max)" />
+    <Property Name="user_image" Type="varchar(max)" />
+    <Property Name="user_phone" Type="varchar(max)" />
+    <Property Name="user_age" Type="int" />
+    <Property Name="fk_role_id" Type="int" Nullable="false" />
+    <Property Name="user_email" Type="varchar" MaxLength="150" />
+    <Property Name="user_approved" Type="int" Nullable="false" />
+    <Property Name="user_std_enrollment_no" Type="varchar(max)" />
+    <Property Name="fk_standard_id" Type="int" />
+    <Property Name="user_verification_code" Type="varchar(max)" />
+    <Property Name="user_email_status" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__tbl_mark__fk_use__6E01572D">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_mark" Type="Self.tbl_mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="tbl_mark">
+        <PropertyRef Name="fk_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_user__fk_rol__6C190EBB">
+    <End Role="tbl_role" Type="Self.tbl_role" Multiplicity="1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_role">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="fk_role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_user__fk_sta__3C34F16F">
+    <End Role="tbl_standard" Type="Self.tbl_standard" Multiplicity="0..1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_standard">
+        <PropertyRef Name="standard_id" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="fk_standard_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_eStudiezModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_extraclass" EntityType="Self.tbl_extraclass" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_feedback" EntityType="Self.tbl_feedback" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_link" EntityType="Self.tbl_link" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_mark" EntityType="Self.tbl_mark" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_pdf" EntityType="Self.tbl_pdf" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_resources" EntityType="Self.tbl_resources" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_role" EntityType="Self.tbl_role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_standard" EntityType="Self.tbl_standard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__tbl_mark__fk_use__6E01572D" Association="Self.FK__tbl_mark__fk_use__6E01572D">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_mark" EntitySet="tbl_mark" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_user__fk_rol__6C190EBB" Association="Self.FK__tbl_user__fk_rol__6C190EBB">
+      <End Role="tbl_role" EntitySet="tbl_role" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_user__fk_sta__3C34F16F" Association="Self.FK__tbl_user__fk_sta__3C34F16F">
+      <End Role="tbl_standard" EntitySet="tbl_standard" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

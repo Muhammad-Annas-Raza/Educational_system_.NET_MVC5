@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "ViewStdMark";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="pagetitle">
+    <h1>View Student Marks</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">View Student Marks</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+@using (Ajax.BeginForm("ViewStdMark", "Home",
+                    new AjaxOptions()
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "update20"
+                    }))
+{
+    @*
+        <div class="row mt-2">
+                <div class="col-md-3">
+                    <label class="form-label h4"><i class="bi bi-clipboard-data"></i>&nbsp;Student Enrollment Number : </label>
+                </div>
+                <div class="col-md-4">
+                    <input name="enrollment_no" />
+                    <button type="Submit" class="btn btn-primary">See Result</button>
+                </div>
+
+            </div>
+    *@
+
+
+
+    <div class="row">
+        <div class="input-group mb-3">
+            <div class="form-outline">
+                <input style="line-height: 18px;border: 1px solid grey;" class="form-control mt-3" name="enrollment_no" placeholder="Enter Enrollment no." />
+            </div>
+
+        </div>
+        <div class="input-group mb-3">
+            <button type="Submit" class="btn btn-primary">See Result</button>
+        </div>
+    </div>
+}
+
+<hr class="dropdown-divider">
+
+
+
+<div id="update20"></div>
+
+
+<script>
+
+    document.querySelector("#title").innerHTML = "eStudiez / View Students Marks";
+
+
+    function search_fun() {
+        let filter = document.getElementById('id').value.toUpperCase();
+        let myTable = document.getElementById('update20');
+        let whole_table = document.querySelectorAll('.xyz1');
+
+        let tr = myTable.getElementsByClassName("subject")
+        let tr1 = myTable.getElementsByClassName("Student_Standard")
+        let tr2 = myTable.getElementsByClassName("obtained_marks")
+        let tr3 = myTable.getElementsByClassName("total_marks")
+        let tr4 = myTable.getElementsByClassName("date_time")
+        let tr5 = myTable.getElementsByClassName("nm")
+        let tr6 = myTable.getElementsByClassName("enroll_no")
+
+        for (var i = 0; i < tr.length; i++) {
+            let td = tr[i].textContent || td.innerHTML;
+            let td1 = tr1[i].textContent || td1.innerHTML;
+            let td2 = tr2[i].textContent || td2.innerHTML;
+            let td3 = tr3[i].textContent || td3.innerHTML;
+            let td4 = tr4[i].textContent || td4.innerHTML;
+            let td5 = tr5[i].textContent || td5.innerHTML;
+            let td6 = tr6[i].textContent || td6.innerHTML;
+            if (td || td1 || td2 || td3 || td4 || t5 || t6) {
+                if (td.toUpperCase().indexOf(filter) > -1 || td1.toUpperCase().indexOf(filter) > -1 || td2.toUpperCase().indexOf(filter) > -1 || td3.toUpperCase().indexOf(filter) > -1 || td4.toUpperCase().indexOf(filter) > -1 || td5.toUpperCase().indexOf(filter) > -1 || td6.toUpperCase().indexOf(filter) > -1) {
+                    console.log(whole_table[i].style.display = "")
+                } else {
+                    whole_table[i].style.display = "none"
+                }
+            }
+        }
+
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+

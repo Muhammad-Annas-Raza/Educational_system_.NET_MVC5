@@ -1,0 +1,292 @@
+﻿@model Project_eStudiez.Models.tbl_user
+
+@{
+    ViewBag.Title = "Material";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+
+<div class="pagetitle">
+    <h1>Material</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage","Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Material</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row">
+
+
+        <div class="col-xl-12">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Upload Extra Class Schedule</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Upload Link</button>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Upload Pdf</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content pt-2">
+
+                        <div class="tab-pane fade show active profile-overview p-25" id="profile-overview">
+
+
+                            @using (Ajax.BeginForm("extraclass", "Home",
+                        new AjaxOptions()
+                        {
+                            HttpMethod = "POST",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "update2"
+                        }))                                                 
+                            {
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label cst_fnt">Class Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                         @*<input type="text" name="extraclass_class" id="extraclass_class" placeholder="Enter Class Name" class="form-control w-50" />*@
+                                        <select class="form-select w-50"name="extraclass_class" id="extraclass_class" >
+
+                                            @foreach (Project_eStudiez.Models.tbl_standard item in (List<Project_eStudiez.Models.tbl_standard>)ViewData["table_standard"])
+                                            {
+                                                <option value="@item.standard_name">@item.standard_name</option>
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label cst_fnt">Extra Class Title</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input type="text" name="extraclass_subject" id="extraclass_subject" placeholder="Enter Title of Extra Class" class="form-control w-50" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label cst_fnt">Extra Class Time</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input type="datetime-local" name="extraclass_dateTime" id="extraclass_dateTime" class="form-control w-50" />
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary" onclick="tell()">Add Class</button>
+                                </div>
+                                <div id="update2"></div>
+                            }
+                        </div>
+
+                        <!-- Profile Edit Form -->
+                        <div class="tab-pane fade profile-edit pt-3 p-25" id="profile-edit">
+                            @using (Ajax.BeginForm("link", "Home",
+                        new AjaxOptions()
+                        {
+                            HttpMethod = "POST",
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "update3"
+                        }))
+                            {
+
+
+
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label">Class Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @*<input type="text" name="link_class" placeholder="Enter Class Name" class="form-control w-50" />*@
+                                        <select class="form-select w-50" name="link_class">
+
+                                            @foreach (Project_eStudiez.Models.tbl_standard item in (List<Project_eStudiez.Models.tbl_standard>)ViewData["table_standard"])
+                                            {
+                                                <option value="@item.standard_name">@item.standard_name</option>
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label">Link</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input type="text" name="link_material" placeholder="Paste Link Url" class="form-control w-50" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label">Title of Link</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input type="text" name="link_title" placeholder="Enter Title of Link" class="form-control w-50" />
+                                    </div>
+                                </div>
+
+
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Add Link</button>
+                                </div>
+                                <div id="update3"></div>
+                            }
+
+                            <!-- End Profile Edit Form -->
+
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade pt-3" id="profile-settings">
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade pt-3 p-25" id="profile-change-password">
+                            <!-- Pdf Form -->
+
+
+                            @using (Ajax.BeginForm("Pdf", "Home",
+                               new AjaxOptions()
+                               {
+                                   HttpMethod = "POST",
+                                   InsertionMode = InsertionMode.Replace,
+                                   UpdateTargetId = "update4"
+                               }, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label cst_fnt">Class Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @*<input type="text" name="pdf_class" class="form-control w-50" placeholder="Enter Class Name" />*@
+                                        <select class="form-select w-50" name="pdf_class">
+
+                                            @foreach (Project_eStudiez.Models.tbl_standard item in (List<Project_eStudiez.Models.tbl_standard>)ViewData["table_standard"])
+                                            {
+                                                <option value="@item.standard_name">@item.standard_name</option>
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label cst_fnt">Title of Pdf</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input type="text" name="pdf_title" class="form-control w-50" placeholder="Enter Title of pdf" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-md-4 col-lg-3 col-form-label cst_fnt">Upload Pdf</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <img src="~/image/Newfolder/2.png" id="clckonee" height="60" width="60" style="cursor:pointer;" /><label id="wrt_here" class="cst_fnt">&nbsp;(Upload pdf)</label>
+                                        <input type="file" name="pdf_material" class="d-none" id="BrowseImagee" onChange='getoutput()' />
+                                        <div id="er"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="text-center mt-5">
+                                    <button type="submit" class="btn btn-primary">Add pdf</button>
+                                </div>
+                                <br />
+
+
+
+                                <!-- End Pdf Form -->
+                            }
+
+
+                            <div id="update4"></div>
+
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script>
+
+
+
+    document.querySelector("#title").innerHTML = " eStudiez / Material";
+
+    $("#clckonee").click(function () {
+        $("#BrowseImagee").click();
+    });
+
+    function getFile(filePath) {
+        return filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[0];
+    }
+
+    function getoutput() {
+        var file_name = getFile(BrowseImagee.value) + "." + BrowseImagee.value.split('.')[1];
+        //outputfile.value = getFile(BrowseImagee.value);
+        //extension.value = BrowseImagee.value.split('.')[1];
+        if (BrowseImagee.value.split('.')[1] == "pdf") {
+
+            document.getElementById("wrt_here").innerHTML = `<span class="text-success">&nbsp;(` + file_name + `)<span>`;
+            document.getElementById("er").innerHTML = "";
+        }
+        else {
+            document.getElementById("wrt_here").innerHTML = `<span class="text-danger">&nbsp;(` + file_name + `)<span>`;
+            document.getElementById("er").innerHTML = `<span class="text-danger">Only pdf are allowed !!!<span>`;
+        }
+    }
+    function tell() {
+        if (document.getElementById("extraclass_class").value == "" || document.getElementById("extraclass_subject").value == "" || document.getElementById("extraclass_dateTime").value == "") {
+
+            document.getElementById("update2").innerHTML = `<h3 class=\"text-danger\">Please Fill all Fields</h3>`;
+        }         
+    }
+
+</script>
+
+

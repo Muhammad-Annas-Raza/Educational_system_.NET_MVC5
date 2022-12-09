@@ -1,0 +1,274 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title id="title"></title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="~/image/logo.png" rel="icon">
+    <link href="~/image/logo.png" rel="apple-touch-icon">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/Content/Bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+</head>
+
+
+<body onload="myfun()">
+    <div id="boooody">
+        <div id="loading"></div>
+
+        <!-- ======= Header ======= -->
+        <header id="header" class="header fixed-top d-flex align-items-center">
+
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="@Url.Action("HomePage","Home")" class="logo d-flex align-items-center">
+                    <img src="~/image/eStudiezlogo.png" alt="">
+                </a>
+                <i class="bi bi-list togle toggle-sidebar-btn"></i>
+
+            </div>
+            <!-- End Logo -->
+
+            <nav class="header-nav ms-auto do_left">
+                <ul class="d-flex align-items-center">
+
+
+
+                    <li class="text-end nav-item dropdown pe-3">
+
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <img src="@Url.Content(Session["user_img"].ToString())" alt="Profile" class="rounded-circle">
+                            <span class="d-none d-md-block dropdown-toggle ps-2">@Session["name"]</span>
+                        </a><!-- End Profile Iamge Icon -->
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <li class="dropdown-header">
+                                <h6>@Session["name"]</h6>
+                                <span>@Session["role"]</span>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="@Url.Action("ProfilePage","Home")">
+                                    @*<a class="dropdown-item d-flex align-items-center">*@
+                                    <i class="bi bi-person"></i>
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Logout","Home")">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    Sign out
+                                </a>
+                            </li>
+                        </ul><!-- End Profile Dropdown Items -->
+                        <!-- End Profile Dropdown Items -->
+                    </li><!-- End Profile Nav -->
+                </ul>
+            </nav>
+            <!-- End Icons Navigation -->
+        </header><!-- End Header -->
+        <!-- ======= Sidebar ======= -->
+        <aside id="sidebar" class="sidebar">
+            <ul class="sidebar-nav" id="sidebar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("HomePage","Home")">
+                        <i class="bi bi-house-door fs-20"></i>
+                        <span>Home</span>
+                    </a>
+                </li><!-- End Home Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Approve","Home")">
+                        <i class="bx-sm bi bi-grid fs-20"></i>
+                        <span>Approve Users</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("AllTeachers", "Home")">
+                        <i class="bi bi-person-circle fs-20"></i>
+                        <span>Teachers</span>
+                    </a>
+                </li><!-- End Add Users Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("AllParent","Home")">
+
+                        <i class="bi bi-person fs-20"></i>
+                        <span>Parent / Guardian</span><i class="ms-auto"></i>
+                    </a>
+
+                </li><!-- End View Users Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("AllStudent","Home")">
+                        <i class="bi bi-people fs-20"></i>
+                        <span>Students</span>
+                    </a><!-- End Add Categories Nav -->
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("AddClass","Home")">
+                        <i class="bi bi-journal-plus fs-20"></i>
+                        <span>Add Standard</span>
+                    </a>
+                </li><!-- End View Categories Nav -->
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Material","Home")">
+                        <i class="bi bi-folder-plus fs-20"></i>
+                        <span>Add Material / Schedule</span>
+                    </a>
+                </li><!-- End View Categories Nav -->
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("ViewMaterial", "Home")">
+                        <i class='bi bi-eye fs-20'></i>
+                        <span>View Material / Schedule</span>
+                    </a>
+                </li><!-- End Add Products Nav -->
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("AddMarks","Home")">
+                        <b> <i class="bi bi-plus-square fs-20"></i></b>
+                        <span>Add Students Marks</span>
+                    </a>
+
+                </li><!-- End Add Stock Nav -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("View_DeleteStdMarks","Home")">
+                        <i class="bx-sm bi bi-eye-fill fs-20"></i>
+                        <span>View Delete Student Marks<br />(For Teachers)</span>
+                        <!-- For Teachers -->
+                    </a>
+                </li><!-- End View Stock Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("ViewStdMark","Home")">
+                        <i class="bx-sm bi bi-eye-fill fs-20"></i>
+                        <span>View Student Marks<br />(For Parents)</span>
+                        <!-- For Parents -->
+                    </a>
+                </li><!-- End View Stock Nav -->
+
+ 
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Feedback","Home")">
+                        <i class="bi bi-envelope fs-20"></i>
+                        <span>Feedback</span>
+                    </a>
+                </li><!-- End Sale Point Nav -->
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("ViewFeedback","Home")">
+                        <i class="bi bi-envelope-open fs-20"></i>
+                        <span>View Feedback</span>
+                    </a>
+                </li><!-- End Sale Point Nav -->
+                
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Viewthefeedback","Home")">
+                        <i class="bi bi-envelope-open-fill fs-20"></i>
+                        <span>View Feedback<br />(For Teacher)</span>
+                        <!-- For Teachers -->
+                    </a>
+                </li><!-- End Sale Point Nav -->
+
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="index.html">
+                        <i class="ri-logout-box-line bx-sm"></i>
+
+                    </a>
+                </li><!-- End Login Page Nav -->
+
+            </ul>
+
+        </aside>
+
+        <main id="main" class="main">
+           
+            @RenderBody()
+        
+        </main><!-- End #main -->
+
+
+
+
+
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
+
+    </div>
+
+    <div class="popup" id="popup7">
+        <h2 class="mt-5"><b id="write_message7"></b></h2>
+        <button class="btn btn-danger" style="float: right;margin: 3px;padding:10px 23px 10px 23px ;" id="bt7">OK</button>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <!-- Vendor JS Files -->
+
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <!-- Jquery Link -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/JavaScript.js"></script>
+
+
+     
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+
+
+        $(document).ready(function () {
+            $('.table_idd').DataTable();
+        });
+
+
+ 
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

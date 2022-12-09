@@ -1,0 +1,348 @@
+﻿@model Project_eStudiez.Models.tbl_user
+
+@{
+    ViewBag.Title = "ProfilePage";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+<div class="pagetitle">
+    <h1>Profile</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage", "Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">Profile</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-4">
+
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                    <img src="@Url.Content(Model.user_image)" alt="Profile" class="rounded-circle">
+
+                    <h2>@Session["name"]</h2>
+                    <h3>@Session["role"]</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content pt-2">
+
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                            <h5 class="card-title">Profile Details</h5>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                <div class="col-lg-9 col-md-8">@Model.user_name</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Role</div>
+                                <div class="col-lg-9 col-md-8">@Session["role"]</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                <div class="col-lg-9 col-md-8">@Model.user_email</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Address</div>
+                                <div class="col-lg-9 col-md-8">@Model.user_address</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Phone</div>
+                                <div class="col-lg-9 col-md-8">@Model.user_phone</div>
+                            </div>
+
+
+                            <div class="row hidee T_H">
+                                <div class="col-lg-3 col-md-4 label">Age</div>
+                                <div class="col-lg-9 col-md-8">@Model.user_age</div>
+                            </div>
+                            <div class="row hidee T_H">
+                                <div class="col-lg-3 col-md-4 label">Standard</div>
+                                 <div class="col-lg-9 col-md-8">@Model.tbl_standard.standard_name</div>  
+                             
+                            </div>
+                            <div class="row hidee T_H">
+                                <div class="col-lg-3 col-md-4 label">Enrollment no</div>
+                                <div class="col-lg-9 col-md-8">@Model.user_std_enrollment_no</div>
+                            </div>
+                            <label class="text-danger h3">@TempData["err"] </label>
+                            <label class="text-success h3">@TempData["msg"] </label>
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                            <!-- Profile Edit Form -->
+
+
+
+                            @using (Html.BeginForm("ProfilePage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+
+
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.user_id)
+                                @Html.HiddenFor(model => model.user_password)
+                                @Html.HiddenFor(model => model.user_confirm_password)
+                                @Html.HiddenFor(model => model.fk_role_id)
+                                @Html.HiddenFor(model => model.user_approved)
+                                @Html.HiddenFor(model => model.user_email_status)
+                                @Html.HiddenFor(model => model.user_std_enrollment_no)
+
+
+
+
+
+                                <div class="row mb-3">
+                                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <img src="@Url.Content(Session["user_img"].ToString())" alt="Profile" id="UserImage">
+                                        <div class="pt-2">
+                                            <a href="#" id="clckone" class="btn btn-primary btn-sm" title="Change profile image"><i class="bi bi-upload"></i></a><label id="wrt_here1">&nbsp;(Edit image)</label>
+                                            <input type="file" name="Http_img" class="d-none" id="BrowseImage"  onChange='getoutput()' />
+                                            <div id="er1"></div>
+                                            @* <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @Html.EditorFor(m => m.user_name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @Html.EditorFor(m => m.user_email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.user_email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @Html.EditorFor(m => m.user_address, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.user_address, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mb-3">
+                                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @Html.EditorFor(m => m.user_phone, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.user_phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 hidee T_H">
+                                    <label for="Age" class="col-md-4 col-lg-3 col-form-label">Age</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @Html.EditorFor(m => m.user_age, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 hidee T_H">
+                                    <label for="Standard" class="col-md-4 col-lg-3 col-form-label">Standard</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        @Html.DropDownList("fk_standard_id", (SelectList)Session["tbl_standard"], "- Select Your Class -", new { @class = "form-select" })
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </div>
+
+                                <div id="l_img" class="d-none">https://i.pinimg.com/originals/65/ba/48/65ba488626025cff82f091336fbf94bb.gif</div>
+
+
+                            }
+
+                            <!-- End Profile Edit Form -->
+
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade pt-3" id="profile-settings">
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                            <!-- Change Password Form -->
+                            <!--<form>-->
+
+                                @using (Ajax.BeginForm("CheckPwd", "Home",
+                                   new AjaxOptions()
+                                   {
+                                       HttpMethod = "POST",
+                                       InsertionMode = InsertionMode.Replace,
+                                       UpdateTargetId = "update1"
+                                   }))
+                                {
+
+
+
+                                    <div class="row mb-3">
+                                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            @Html.EditorFor(model => model.user_password, new
+                                      {
+                                     htmlAttributes = new
+                                          {
+                                              @class = "form-control",
+                                              @type = "password",
+                                              @Value =
+                                     @ViewBag.user_password
+                                          }
+                                      })
+                                            @*<input name="password" type="password" class="form-control" id="currentPassword">*@
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Verify Password</button>
+                                    </div>
+                                    <br />
+
+
+
+                                    //</form><!-- End Change Password Form -->
+                                }
+
+
+                                <div id="update1"></div>
+
+
+</div>
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script>
+    document.querySelector("#title").innerHTML = " eStudiez / Profile";
+    var role = '@Session["role"].ToString()';
+
+    if (role == "Student") {
+
+        const boxes = document.querySelectorAll('.T_H');
+
+        boxes.forEach(box => {
+            // ✅ Remove class from each element
+            box.classList.remove('hidee');
+
+            // ✅ Add class to each element
+            // box.classList.add('small');
+        });
+    }
+
+    $("#clckone").click(function () {
+        $("#BrowseImage").click();
+    });
+
+    $('#BrowseImage').change(function () {
+        if (this.files && this.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+            fileReader.onload = function (x) {
+                $('#UserImage').attr('src', x.target.result);
+            }
+        }
+    });
+    function getFile(filePath) {
+        return filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[0];
+    }
+
+    function getoutput() {
+        var file_name = getFile(BrowseImage.value) + "." + BrowseImage.value.split('.')[1];
+        //outputfile.value = getFile(BrowseImagee.value);
+        //extension.value = BrowseImagee.value.split('.')[1];
+        if (BrowseImage.value.split('.')[1].toLowerCase() == "jpg" || BrowseImage.value.split('.')[1].toLowerCase() == "png" || BrowseImage.value.split('.')[1].toLowerCase() == "jpeg") {
+
+            document.getElementById("wrt_here1").innerHTML = `<span class="text-success">&nbsp;(` + file_name + `)<span>`;
+            document.getElementById("er1").innerHTML = "";
+        }
+        else {
+            document.getElementById("wrt_here1").innerHTML = `<span class="text-danger">&nbsp;(` + file_name + `)<span>`;
+            document.getElementById("er1").innerHTML = `<span class="text-danger">Only .jpg .jpeg & .png are allowed !!!<span>`;
+        }
+    }
+
+
+
+
+
+</script>
+

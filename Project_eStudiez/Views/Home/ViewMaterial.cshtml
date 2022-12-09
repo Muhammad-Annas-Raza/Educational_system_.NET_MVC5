@@ -1,0 +1,292 @@
+﻿
+@model Project_eStudiez.OtherMethods.Class3in1
+
+@{
+    ViewBag.Title = "ViewMaterial";
+    if (Session["role"].Equals("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (Session["role"].Equals("Parent/Guardian"))
+    {
+        Layout = "~/Views/Shared/_LayoutParent.cshtml";
+    }
+    else if (Session["role"].Equals("Teacher"))
+    {
+        Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    }
+    else if (Session["role"].Equals("Super Admin"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="pagetitle">
+    <h1>View Material</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("HomePage", "Home")">eStudiez</a></li>
+            <li class="breadcrumb-item active">View Material</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row">
+
+
+        <div class="col-xl-12">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Extra Class Schedule</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Link Details</button>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Download Pdf</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content pt-2">
+
+                        <div class="tab-pane fade show active profile-overview p-25" id="profile-overview">
+
+                            <table class="display table-bordered table_idd" id="update11">
+                                <thead class="tbl_head">
+                                    <tr>
+                                        <th>Serial No.</th>
+                                        <th>Class Name</th>
+                                        <th>Time of Class</th>
+                                        <th>Extra Class Subject</th>
+                                        <th>Delete Class Schedule</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var i = 0;
+                                    }
+                                    @foreach (var item in Model.lst_tbl_extraclass)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @(i+=1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.extraclass_class)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.extraclass_dateTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.extraclass_subject)
+                                            </td>
+                                            <td class="text-center">
+
+
+                                                @using (Ajax.BeginForm("extraclassDelete", "Home",
+                                                          new AjaxOptions()
+                                                          {
+                                                              HttpMethod = "POST",
+                                                              InsertionMode = InsertionMode.Replace,
+                                                              UpdateTargetId = "update11"
+                                                          }))
+                                                {
+                                                    <input class="d-none" hidden value="@item.extraclass_id" name="id" />
+                                                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                                                }
+                                            </td>
+                                            @*<td class="text-center">
+                                                    <a href="@Url.Action("extraclassDelete","Home",new { id = item.extraclass_id})" class="btn btn-danger btn-sm" title="Delete Schedule"><i class="bi bi-trash"></i></a>
+                                                </td>*@
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+
+                        </div>
+
+                        <!-- Profile Edit Form -->
+                        <div class="tab-pane fade profile-edit pt-3 p-25" id="profile-edit">
+
+
+
+
+                            <table class="display table-bordered table_idd" id="update12">
+                                <thead class="tbl_head">
+                                    <tr>
+                                        <th>Serial no.</th>
+                                        <th>Class Name</th>
+                                        <th>Click on Link </th>
+                                        <th>Delete Link</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        i = 0;
+                                    }
+                                    @foreach (var item in Model.lst_tbl_link)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @(i+=1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.link_class)
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Content(item.link_material)" target="_blank">@item.link_title</a>
+                                            </td>
+
+                                            @*<td class="text-center">
+                                                <a href="@Url.Action("linkDelete","Home",new { id =item.link_id})" class="btn btn-danger btn-sm" title="Delete link"><i class="bi bi-trash"></i></a>
+                                            </td>*@
+                                            <td class="text-center">
+
+
+                                                @using (Ajax.BeginForm("linkDelete", "Home",
+                                                          new AjaxOptions()
+                                                          {
+                                                              HttpMethod = "POST",
+                                                              InsertionMode = InsertionMode.Replace,
+                                                              UpdateTargetId = "update12"
+                                                          }))
+                                                {
+                                                    <input class="d-none" hidden value="@item.link_id" name="id" />
+                                                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                                                }
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <div class="tab-pane fade pt-3 p-25" id="profile-change-password">
+                            <!-- Pdf Form -->
+
+
+
+
+
+                            <table class="display table-bordered table_idd" id="update13">
+                                <thead class="tbl_head">
+                                    <tr>
+                                        <th>Serial no.</th>
+                                        <th>Class Name</th>
+                                        <th>Title Of Pdf</th>
+                                        <th>Click to View Pdf</th>
+                                        <th>Click to Download Pdf</th>
+                                        <th>Delete Pdf</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        i = 0;
+                                    }
+                                    @foreach (var item in Model.lst_tbl_pdf)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @(i+=1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.pdf_class)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.pdf_title)
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="@Url.Content(item.pdf_material)" target="_blank"><img height="60" width="60" src="~/image/Newfolder/pdf-icon.png" /></a>
+                                            </td> 
+                                            <td class="text-center">
+                                                <a href="@Url.Content(item.pdf_material)" download="@item.pdf_title"><i class=" btn btn-primary bi bi-download"></i></a>
+                                            </td>
+
+     
+                                            @*<td class="text-center">
+                                                <a href="@Url.Action("PdfDelete","Home",new { id =item.pdf_id})" class="btn btn-danger btn-sm" title="Delete pdf"><i class="bi bi-trash"></i></a>
+                                            </td>*@
+                                            <td class="text-center">
+
+
+                                                @using (Ajax.BeginForm("PdfDelete", "Home",
+                                                          new AjaxOptions()
+                                                          {
+                                                              HttpMethod = "POST",
+                                                              InsertionMode = InsertionMode.Replace,
+                                                              UpdateTargetId = "update13"
+                                                          }))
+                                                {
+                                                    <input class="d-none" hidden value="@item.pdf_id" name="id" />
+                                                    <button type="submit" class="border-0"><i class="bi bi-trash btn btn-danger"></i></button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+                </div>
+            </div>
+            <h2 class="text-danger">@TempData["msssg"]</h2>
+
+        </div>
+    </div>
+</section>
+<script>
+
+
+
+    document.querySelector("#title").innerHTML = " eStudiez / View Material";
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+
+
+
+
+
