@@ -5,11 +5,14 @@
 <div>In this system eStudiez is a fictional name of a educational system</div>
 
 ========================================== important notes ======================================================
-git config http.postBuffer 524288000              //When push is not done through git terminal
-https://www.guru99.com/deploying-website-iis.html //To setup IIS in server machine
+<br>git config http.postBuffer 524288000              //When push is not done through git terminal
+<br>https://www.guru99.com/deploying-website-iis.html //To setup IIS in server machine
 
-https://kandi.openweaver.com/?landingpage=python_all_codesnippets&utm_source=youtube&utm_medium=cpc&utm_campaign=promo_kandi_ie&utm_content=kandi_ie_buildwith&utm_term=python_devs&gclid=Cj0KCQjwgLOiBhC7ARIsAIeetVCB_EKLkVhwoUxJtFA0Ccepj2VVCseD6_eAeORizIJHO4qAW5MgcVIaAplAEALw_wcB
+<br>https://kandi.openweaver.com/?landingpage=python_all_codesnippets&utm_source=youtube&utm_medium=cpc&utm_campaign=promo_kandi_ie&utm_content=kandi_ie_buildwith&utm_term=python_devs&gclid=Cj0KCQjwgLOiBhC7ARIsAIeetVCB_EKLkVhwoUxJtFA0Ccepj2VVCseD6_eAeORizIJHO4qAW5MgcVIaAplAEALw_wcB
 
 
-Scaffold-DbContext “server=DESKTOP-83AVVG7\MSSQLSERVER19;database=iSOL_POS;User ID=sa;Password=Super@123;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true” Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+<br>Scaffold-DbContext “server=DESKTOP-83AVVG7\MSSQLSERVER19;database=iSOL_POS;User ID=sa;Password=Super@123;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true” Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 //Database First Approach in .Net 7.0 Scaffold Command
+
+<br>When Models are not being made from scaffolding (Database First Approach) in MVC5 
+https://stackoverflow.com/questions/76388322/cannot-import-anymore-tables-into-edmx-running-transformation-system-nullrefe
