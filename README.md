@@ -16,3 +16,6 @@
 
 <br>When Models are not being made from scaffolding (Database First Approach) in MVC5 
 https://stackoverflow.com/questions/76388322/cannot-import-anymore-tables-into-edmx-running-transformation-system-nullrefe
+
+<br>
+Scaffold-DbContext 'Name=ConnectionStrings:cs' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
