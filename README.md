@@ -19,3 +19,15 @@ https://stackoverflow.com/questions/76388322/cannot-import-anymore-tables-into-e
 
 <br>
 Scaffold-DbContext 'Name=ConnectionStrings:cs' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force
+
+<br>
+https://www.youtube.com/watch?v=moqe9mh3j2c&feature=youtu.be
+<br>
+Setup IIS on Windows 10
+
+
+
+<br>
+Reseed Query to over come SQL SERVER abnormal behaviour
+<br>
+DBCC CHECKIDENT ('table_name', RESEED, new_value); 
