@@ -30,7 +30,7 @@ Reseed Query to over come SQL SERVER abnormal behaviour
 <br>
 DBCC CHECKIDENT ('table_name', RESEED, new_value); 
  
-<br>
+<br><br><br>
 3 - Layered Architecture Demo 
 <br>
 https://enlabsoftware.com/development/how-to-build-and-deploy-a-three-layer-architecture-application-with-c-sharp-net-in-practice.html
