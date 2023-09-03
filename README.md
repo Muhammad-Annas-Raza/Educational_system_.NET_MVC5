@@ -25,7 +25,7 @@ https://www.youtube.com/watch?v=moqe9mh3j2c&feature=youtu.be
 <br>
 Setup IIS on Windows 10
 
-<br>
+<br><br><br>
 Reseed Query to over come SQL SERVER abnormal behaviour
 <br>
 DBCC CHECKIDENT ('table_name', RESEED, new_value); 
