@@ -37,3 +37,78 @@ https://enlabsoftware.com/development/how-to-build-and-deploy-a-three-layer-arch
 <br>
 Github Repo : https://github.com/EnLabSoftware/Three-layer_architecture_sample
 <br><br>
+
+<br>
+Convert Base64 in to byte (image) through C#
+ public ActionResult ImageReport()
+        {
+            try
+            {
+                string Token = "Lg==|ZGJfVHJpcEVycA==|c2E=|c3Fs";
+                CS = $"data source = {Decrypt(Token.Split('|')[0])}; initial catalog = {Decrypt(Token.Split('|')[1])}; user id = {Decrypt(Token.Split('|')[2])}; password = {Decrypt(Token.Split('|')[3])}";
+                SqlConnection con = null;
+                DataTable ds = new DataTable();
+                try
+                {
+                    using (con = new SqlConnection(CS))
+                    {
+                        string query = "select Img_idd,Img_Form,Img_Name,dbo.Base64ToVarBinary(Img_Image) as Image from MP_Images where RIGHT(Img_Name, 3) = 'png'";
+                        SqlDataAdapter sda = new SqlDataAdapter(query, con);
+                        sda.Fill(ds);
+
+                        // Add a new column named "Image" with byte[] data type
+                        ds.Columns.Add("Image", typeof(byte[]));
+
+                        // Populate the "Image" column with byte array data
+                        foreach (DataRow row in ds.Rows)
+                        {
+                            // Assuming the column "Img_Image" contains your Base64 strings
+                            string base64String = row["Img_Image"].ToString();
+                            byte[] byteArray = Convert.FromBase64String(base64String);
+                            row["Image"] = byteArray;
+                        }
+
+                        GenerateReport(ds, "Reports", "MP_Image", "ImageDocument", "");
+                    }
+                }
+                catch (Exception e)
+                {
+                    ViewBag.ErrorMsg = e.Message;
+                }
+                return View();
+
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+<br>
+Convert Base64 in to byte (image) through Sql Server Custom Function
+-- Function <Start>--
+IF OBJECT_ID('dbo.Base64ToVarBinary', 'FN') IS NULL
+BEGIN
+    EXEC('
+        CREATE FUNCTION dbo.Base64ToVarBinary (@base64String NVARCHAR(MAX))
+        RETURNS VARBINARY(MAX)
+        AS
+        BEGIN
+            DECLARE @result VARBINARY(MAX);
+            SET @result = CAST('''' AS XML).value(''xs:base64Binary(sql:variable("@base64String"))'', ''VARBINARY(MAX)'');
+            RETURN @result;
+        END;
+    ');
+END;
+-- Function <End>--
+
+
+
+
+
+
+
+
+
