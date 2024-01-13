@@ -41,9 +41,7 @@ Github Repo : https://github.com/EnLabSoftware/Three-layer_architecture_sample
 <br>
 Convert Base64 in to byte (image) through C#
 <br><br><br>
-<br><br><br>
-<br><br><br>
-
+// .Net Mvc Code
 public ActionResult ImageReport()
         {
             try
@@ -93,7 +91,7 @@ public ActionResult ImageReport()
 <br>
 Convert Base64 in to byte (image) through Sql Server Custom Function
 <br><br><br>
--- Function <Start>--<br><br><br>
+-- Function Start--<br><br><br>
 
 IF OBJECT_ID('dbo.Base64ToVarBinary', 'FN') IS NULL
 BEGIN
@@ -109,7 +107,7 @@ BEGIN
     ');
 END;
 <br><br><br>
--- Function <End>--
+-- Function End--
 
 
 
