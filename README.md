@@ -41,9 +41,8 @@ Github Repo : https://github.com/EnLabSoftware/Three-layer_architecture_sample
 <br>
 Convert Base64 in to byte (image) through C#
 <br><br><br>
-// .Net Mvc Code
-public ActionResult ImageReport()
-        {
+// .Net Mvc Code <br>
+public ActionResult ImageReport(){
             try
             {
                 string Token = "Lg==|ZGJfVHJpcEVycA==|c2E=|c3Fs";
